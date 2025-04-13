@@ -265,7 +265,7 @@
         return;
       }
 
-      if (!/^[a-z]$/i.test(e.key)) return;
+     if (!/^[a-zー\-]$/i.test(e.key)) return;
 
       const key = e.key.toLowerCase();
       const expectedChar = romaji[input.length];
