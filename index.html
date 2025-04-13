@@ -102,6 +102,9 @@
     }
 
 
+
+
+
   </style>
 </head>
 <body>
@@ -272,7 +275,13 @@
       missDisplay.textContent = `ミス: ${miss}`;
     }
 
-    startBtn.addEventListener('click', startGame);
+   const bgm = document.getElementById('bgm');
+
+startBtn.addEventListener('click', () => {
+  bgm.play(); 
+  startGame();
+});
+
    
     
     document.getElementById('aboutBtn').addEventListener('click', () => {
