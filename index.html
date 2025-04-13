@@ -348,5 +348,25 @@ startBtn.addEventListener('click', () => {
       }
     });
   </script>
+  <style>
+  #mobileWarning {
+    display: none;
+    font-size: 24px;
+    color: red;
+    text-align: center;
+    margin-top: 50px;
+  }
+  @media screen and (max-width: 768px) {
+    #titleArea, #gameScreen, #message {
+      display: none !important;
+    }
+    #mobileWarning {
+      display: block;
+    }
+  }
+</style>
+
+<div id="mobileWarning">このサイトはPC専用だす！</div>
+
 </body>
 </html>
