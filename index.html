@@ -182,6 +182,13 @@
           const nextRomaji = kanaMap[next] || kanaMap[text[i + 1]];
           result += nextRomaji[0] + nextRomaji;
           i++;
+           } else if (text[i] === 'ー') {
+      const lastChar = result[result.length - 1];
+      if ("aeiou".includes(lastChar)) {
+        result += lastChar;
+      } else {
+        result += '-';
+      }
         } else if (kanaMap[text.slice(i, i + 2)]) {
           result += kanaMap[text.slice(i, i + 2)];
           i++;
