@@ -121,7 +121,6 @@
 
   <audio id="typeSound" src="nyo.mp3" preload="auto"></audio>
   <audio id="missSound" src="gua.mp3" preload="auto"></audio>
-  <audio id="buttonSound" src="start.mp3" preload="auto"></audio>
 
 
   <script>
@@ -213,12 +212,6 @@
       typeSound.play();
     }
 
-    function playButtonSound() {
-  const buttonSound = document.getElementById('buttonSound');
-  buttonSound.currentTime = 0;
-  buttonSound.play();
-}
-
 
     function startGame() {
       score = 0;
@@ -257,7 +250,6 @@
     }
 
     startBtn.addEventListener('click', startGame);
-    playButtonSound();
    
     
     document.getElementById('aboutBtn').addEventListener('click', () => {
