@@ -100,6 +100,14 @@
       margin-top: 15px;
       font-size: 18px;
     }
+
+    const bgm = document.getElementById('bgm');
+
+startBtn.addEventListener('click', () => {
+  bgm.play(); // スタートボタン押されたときに再生
+  startGame();
+});
+
   </style>
 </head>
 <body>
@@ -135,7 +143,6 @@
   <audio id="missSound" src="gua.mp3" preload="auto"></audio>
   <audio id="startSound" src="start.mp3" preload="auto"></audio>
   <audio id="bgm" src="bgm.mp3" autoplay loop preload="auto"></audio>
-
 
 
   <script>
