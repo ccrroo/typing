@@ -91,7 +91,7 @@
         <option value="hard">むずかしい</option>
       </select><br>
       <button class="btn" id="startBtn">はじめる</button>
-      <button class="btn" id="aboutBtn">アバウトアワー</button>
+      <button class="btn" id="aboutBtn">おれのX</button>
     </div>
   </div>
 </div>
@@ -234,6 +234,12 @@
     }
 
     startBtn.addEventListener('click', startGame);
+   
+    
+    document.getElementById('aboutBtn').addEventListener('click', () => {
+  window.open('https://x.com/sta0z', '_blank');
+});
+
 
     document.addEventListener('keydown', (e) => {
       if (!started) return;
