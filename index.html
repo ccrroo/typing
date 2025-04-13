@@ -81,27 +81,32 @@
 <body>
 
   <div id="titleArea">
+  <div id="titleContainer">
     <img id="titleImage" src="hakodatelogo.png" alt="タイトル画像">
-  <div>
-    <h1>函館高専大好き<br>タイピング</h1>
-    <select id="difficulty">
-      <option value="easy">かんたん</option>
-      <option value="normal" selected>ふつう</option>
-      <option value="hard">むずかしい</option>
-    </select><br>
-    <button class="btn" id="startBtn">はじめる</button>
-    <button class="btn" id="aboutBtn">アバウトアワー</button>
+    <div>
+      <h1>函館高専大好き<br>タイピング</h1>
+      <select id="difficulty">
+        <option value="easy">かんたん</option>
+        <option value="normal" selected>ふつう</option>
+        <option value="hard">むずかしい</option>
+      </select><br>
+      <button class="btn" id="startBtn">はじめる</button>
+      <button class="btn" id="aboutBtn">アバウトアワー</button>
+    </div>
   </div>
+</div>
 
-  <div id="message" class="hidden">スペースで開始</div>
+<!-- ↓↓↓ この2つを titleArea の外に出すのがポイント ↓↓↓ -->
+<div id="message" class="hidden">スペースで開始</div>
 
-  <div id="gameScreen" class="hidden">
-    <div id="japaneseText"></div>
-    <div id="typingArea"></div>
-    <div id="timer">60秒</div>
-    <div id="score">スコア: 0</div>
-    <div id="miss">ミス: 0</div>
-  </div>
+<div id="gameScreen" class="hidden">
+  <div id="japaneseText"></div>
+  <div id="typingArea"></div>
+  <div id="timer">60秒</div>
+  <div id="score">スコア: 0</div>
+  <div id="miss">ミス: 0</div>
+</div>
+
 
   <audio id="typeSound" src="https://soundeffect-lab.info/sound/button/mp3/cursor8.mp3" preload="auto"></audio>
 
