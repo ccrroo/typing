@@ -5,152 +5,238 @@
   <title>そこそこタイピング</title>
   <style>
     body {
-      background-color: #ffe6eb;
-      font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      background-color: #ffe4e1;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 40px;
       margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
     }
 
     h1 {
-      color: #d63384;
-      font-size: 4em;
-      text-align: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-      margin-bottom: 40px;
-      animation: floatTitle 3s ease-in-out infinite;
-    }
-
-    @keyframes floatTitle {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    .button-container {
-      display: flex;
-      gap: 20px;
+      font-size: 48px;
+      line-height: 1.2;
+      color: #333;
+      margin-bottom: 20px;
     }
 
     .btn {
       background-color: #4CAF50;
       color: white;
       padding: 15px 30px;
-      font-size: 1em;
+      font-size: 18px;
+      margin: 10px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      animation: pulse 2s infinite;
-      transition: transform 0.2s, background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      animation: zoom 1.8s infinite alternate;
     }
 
-    .btn:hover {
-      background-color: #45a049;
-      transform: scale(1.05);
+    @keyframes zoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.03); }
+    .hidden { display: none; }
+
+    #japaneseText {
+      font-size: 32px;
+      margin-top: 20px;
     }
 
-    #startMessage {
-      display: none;
-      font-size: 2em;
-      color: #333;
-      animation: fadeIn 1s ease-in-out forwards;
-    }
-
-    #typingText {
-      font-size: 1.5em;
-      margin-top: 30px;
-      color: black;
-      display: none;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .hidden {
-      display: none;
+    #typingArea {
+      font-size: 24px;
+      margin-top: 10px;
     }
 
     .correct {
       color: red;
     }
+
+    #score, #miss, #timer {
+      margin-top: 15px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
-  <h1 id="title">そこそこ<br>タイピング</h1>
 
-  <div class="button-container" id="buttons">
-    <button class="btn" id="startBtn">始める</button>
-    <button class="btn">アバウトアワー</button>
+  <div id="titleArea">
+    <h1>そこそこ<br>タイピング</h1>
+    <select id="difficulty">
+      <option value="easy">かんたん</option>
+      <option value="normal" selected>ふつう</option>
+      <option value="hard">むずかしい</option>
+    </select><br>
+    <button class="btn" id="startBtn">はじめる</button>
+    <button class="btn" id="aboutBtn">アバウトアワー</button>
   </div>
 
-  <div id="startMessage">スペースで開始</div>
-  <div id="typingText"></div>
+  <div id="message" class="hidden">スペースで開始</div>
+
+  <div id="gameScreen" class="hidden">
+    <div id="japaneseText"></div>
+    <div id="typingArea"></div>
+    <div id="timer">60秒</div>
+    <div id="score">スコア: 0</div>
+    <div id="miss">ミス: 0</div>
+  </div>
+
+  <audio id="typeSound" src="https://soundeffect-lab.info/sound/button/mp3/cursor8.mp3" preload="auto"></audio>
 
   <script>
+    const sentenceBank = {
+      easy: ["ねこ", "いぬ", "すし", "やま"],
+      normal: ["がっこうにいく", "きょうはいいてんき", "すしをたべたい", "ともだちとあそぶ"],
+      hard: ["けさははやくおきてこうえんをさんぽしました", "がっこうのともだちといっしょにべんきょうしています"]
+    };
+
+    const kanaMap = {
+      "きゃ":"kya", "きゅ":"kyu", "きょ":"kyo", "しゃ":"sha", "しゅ":"shu", "しょ":"sho",
+      "ちゃ":"cha", "ちゅ":"chu", "ちょ":"cho", "にゃ":"nya", "にゅ":"nyu", "にょ":"nyo",
+      "ひゃ":"hya", "ひゅ":"hyu", "ひょ":"hyo", "みゃ":"mya", "みゅ":"myu", "みょ":"myo",
+      "りゃ":"rya", "りゅ":"ryu", "りょ":"ryo", "ぎゃ":"gya", "ぎゅ":"gyu", "ぎょ":"gyo",
+      "じゃ":"ja", "じゅ":"ju", "じょ":"jo",
+      "あ":"a", "い":"i", "う":"u", "え":"e", "お":"o",
+      "か":"ka", "き":"ki", "く":"ku", "け":"ke", "こ":"ko",
+      "さ":"sa", "し":"shi", "す":"su", "せ":"se", "そ":"so",
+      "た":"ta", "ち":"chi", "つ":"tsu", "て":"te", "と":"to",
+      "な":"na", "に":"ni", "ぬ":"nu", "ね":"ne", "の":"no",
+      "は":"ha", "ひ":"hi", "ふ":"fu", "へ":"he", "ほ":"ho",
+      "ま":"ma", "み":"mi", "む":"mu", "め":"me", "も":"mo",
+      "や":"ya", "ゆ":"yu", "よ":"yo",
+      "ら":"ra", "り":"ri", "る":"ru", "れ":"re", "ろ":"ro",
+      "わ":"wa", "を":"wo", "ん":"n",
+      "が":"ga", "ぎ":"gi", "ぐ":"gu", "げ":"ge", "ご":"go",
+      "ざ":"za", "じ":"ji", "ず":"zu", "ぜ":"ze", "ぞ":"zo",
+      "だ":"da", "ぢ":"ji", "づ":"zu", "で":"de", "ど":"do",
+      "ば":"ba", "び":"bi", "ぶ":"bu", "べ":"be", "ぼ":"bo",
+      "ぱ":"pa", "ぴ":"pi", "ぷ":"pu", "ぺ":"pe", "ぽ":"po"
+    };
+
+    let romaji = '';
+    let input = '';
+    let sentence = '';
+    let score = 0;
+    let miss = 0;
+    let started = false;
+    let timer = 60;
+    let timerId = null;
+
     const startBtn = document.getElementById('startBtn');
-    const title = document.getElementById('title');
-    const buttons = document.getElementById('buttons');
-    const startMessage = document.getElementById('startMessage');
-    const typingText = document.getElementById('typingText');
+    const titleArea = document.getElementById('titleArea');
+    const message = document.getElementById('message');
+    const gameScreen = document.getElementById('gameScreen');
+    const japaneseText = document.getElementById('japaneseText');
+    const typingArea = document.getElementById('typingArea');
+    const scoreDisplay = document.getElementById('score');
+    const missDisplay = document.getElementById('miss');
+    const timerDisplay = document.getElementById('timer');
+    const typeSound = document.getElementById('typeSound');
 
-    const sentences = [
-      "こんにちは、今日はいい天気ですね。",
-      "タイピングは楽しいですね！",
-      "プログラミングを始めましょう。",
-      "コーヒーを飲みながら集中しよう。",
-      "日本語のタイピングも練習しよう。"
-    ];
-
-    let currentSentence = '';
-    let userInput = '';
-    let gameStarted = false;
-
-    startBtn.addEventListener('click', () => {
-      title.classList.add('hidden');
-      buttons.classList.add('hidden');
-      startMessage.style.display = 'block';
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (!gameStarted && e.code === 'Space') {
-        e.preventDefault(); // スクロール防止
-        gameStarted = true;
-        startMessage.style.display = 'none';
-        userInput = '';
-        currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
-        updateTypingText();
-        typingText.style.display = 'block';
-      } else if (gameStarted && e.key.length === 1) {
-        userInput += e.key;
-        updateTypingText();
-      } else if (gameStarted && e.key === 'Backspace') {
-        userInput = userInput.slice(0, -1);
-        updateTypingText();
-      }
-    });
-
-    function updateTypingText() {
-      let highlighted = '';
-      for (let i = 0; i < currentSentence.length; i++) {
-        if (userInput[i] === currentSentence[i]) {
-          highlighted += `<span class="correct">${currentSentence[i]}</span>`;
+    function kanaToRomaji(text) {
+      let result = '';
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === 'っ' && i + 1 < text.length) {
+          const next = text.slice(i + 1, i + 3);
+          const nextRomaji = kanaMap[next] || kanaMap[text[i + 1]];
+          result += nextRomaji[0] + nextRomaji;
+          i++;
+        } else if (kanaMap[text.slice(i, i + 2)]) {
+          result += kanaMap[text.slice(i, i + 2)];
+          i++;
         } else {
-          highlighted += currentSentence[i];
+          result += kanaMap[text[i]] || text[i];
         }
       }
-      typingText.innerHTML = highlighted;
+      return result;
     }
+
+    function loadNewSentence() {
+      const level = document.getElementById('difficulty').value;
+      const list = sentenceBank[level];
+      sentence = list[Math.floor(Math.random() * list.length)];
+      romaji = kanaToRomaji(sentence);
+      input = '';
+      japaneseText.textContent = sentence;
+      updateTypingArea();
+    }
+
+    function updateTypingArea() {
+      typingArea.innerHTML = `<span class="correct">${input}</span>${romaji.slice(input.length)}`;
+    }
+
+    function playSound() {
+      typeSound.currentTime = 0;
+      typeSound.play();
+    }
+
+    function startGame() {
+      score = 0;
+      miss = 0;
+      timer = 60;
+      started = true;
+      updateScore();
+      updateMiss();
+
+      titleArea.classList.add('hidden');
+      message.classList.remove('hidden');
+    }
+
+    function beginTyping() {
+      message.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+      loadNewSentence();
+
+      timerId = setInterval(() => {
+        timer--;
+        timerDisplay.textContent = `${timer}秒`;
+        if (timer <= 0) {
+          clearInterval(timerId);
+          alert(`タイムアップ！スコア: ${score}`);
+          location.reload();
+        }
+      }, 1000);
+    }
+
+    function updateScore() {
+      scoreDisplay.textContent = `スコア: ${score}`;
+    }
+
+    function updateMiss() {
+      missDisplay.textContent = `ミス: ${miss}`;
+    }
+
+    startBtn.addEventListener('click', startGame);
+
+    document.addEventListener('keydown', (e) => {
+      if (!started) return;
+
+      if (message.classList.contains('hidden') === false && e.code === 'Space') {
+        e.preventDefault();
+        beginTyping();
+        return;
+      }
+
+      if (!/^[a-z]$/i.test(e.key)) return;
+
+      const key = e.key.toLowerCase();
+      const expectedChar = romaji[input.length];
+
+      if (key === expectedChar) {
+        input += key;
+        playSound();
+        updateTypingArea();
+        if (input === romaji) {
+          score++;
+          updateScore();
+          loadNewSentence();
+        }
+      } else {
+        miss++;
+        updateMiss();
+      }
+    });
   </script>
 </body>
 </html>
