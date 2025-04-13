@@ -121,6 +121,7 @@
 
   <audio id="typeSound" src="nyo.mp3" preload="auto"></audio>
   <audio id="missSound" src="gua.mp3" preload="auto"></audio>
+  <audio id="startSound" src="start.mp3" preload="auto"></audio>
 
 
   <script>
@@ -212,6 +213,13 @@
       typeSound.play();
     }
 
+    function playStartSound() {
+  const sound = document.getElementById('startSound');
+  sound.currentTime = 0;
+  sound.play();
+}
+
+
 
     function startGame() {
       score = 0;
@@ -262,6 +270,7 @@
 
       if (message.classList.contains('hidden') === false && e.code === 'Space') {
         e.preventDefault();
+        playStartSound();
         beginTyping();
         return;
       }
