@@ -348,25 +348,14 @@ startBtn.addEventListener('click', () => {
       }
     });
   </script>
-  <style>
-  #mobileWarning {
-    display: none;
-    font-size: 24px;
-    color: red;
-    text-align: center;
-    margin-top: 50px;
-  }
-  @media screen and (max-width: 768px) {
-    #titleArea, #gameScreen, #message {
-      display: none !important;
+<script>
+  window.addEventListener('load', () => {
+    if (window.innerWidth <= 768) {
+      alert('このサイトはPC専用だす！');
     }
-    #mobileWarning {
-      display: block;
-    }
-  }
-</style>
+  });
+</script>
 
-<div id="mobileWarning">このサイトはPC専用だす！</div>
 
 </body>
 </html>
