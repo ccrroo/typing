@@ -31,6 +31,24 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       animation: zoom 1.8s infinite alternate;
     }
+#titleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+#titleImage {
+  width: 150px;
+  height: 150px;
+  animation: spin 8s linear infinite;
+  border-radius: 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
     @keyframes zoom {
       0% { transform: scale(1); }
@@ -62,7 +80,9 @@
 <body>
 
   <div id="titleArea">
-    <h1>そこそこ<br>タイピング</h1>
+    <img id="titleImage" src="your-image.jpg" alt="タイトル画像">
+  <div>
+    <h1>函館高専大好き<br>タイピング</h1>
     <select id="difficulty">
       <option value="easy">かんたん</option>
       <option value="normal" selected>ふつう</option>
