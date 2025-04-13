@@ -261,7 +261,7 @@
         timerDisplay.textContent = `${timer}秒`;
         if (timer <= 0) {
           clearInterval(timerId);
-          alert(`タイムアップ！スコア: ${score}`);
+          alert(`もう終わりだにょん！スコア: ${score}`);
           location.reload();
         }
       }, 1000);
@@ -279,6 +279,7 @@
 
 startBtn.addEventListener('click', () => {
   bgm.play(); 
+   bgm.volume = 0.3;
   startGame();
 });
 
