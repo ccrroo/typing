@@ -120,6 +120,7 @@
 
 
   <audio id="typeSound" src="nyo.mp3" preload="auto"></audio>
+  <audio id="missSound" src="gua.mp3" preload="auto"></audio>
 
 
   <script>
@@ -171,6 +172,7 @@
     const missDisplay = document.getElementById('miss');
     const timerDisplay = document.getElementById('timer');
     const typeSound = document.getElementById('typeSound');
+    const missSound = document.getElementById('missSound');
 
     function kanaToRomaji(text) {
       let result = '';
@@ -279,6 +281,8 @@
       } else {
         miss++;
         updateMiss();
+        missSound.currentTime = 0;
+  missSound.play();
       }
     });
   </script>
