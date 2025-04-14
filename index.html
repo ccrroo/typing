@@ -143,37 +143,22 @@
   color: #0066cc;
 }
 
-.x-share-button {
-  background: linear-gradient(135deg, #1da1f2, #0d8ddb);
+.x-share-link {
+  display: inline-block;
+  background: #1da1f2;
   color: white;
-  font-size: 1.2rem;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
 }
-.x-share-button:hover {
+.x-share-link:hover {
+  background: #0d8ddb;
   transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
-
- document.getElementById('shareButton').addEventListener('click', () => {
-  const score = document.getElementById('score').textContent;
-  const miss = document.getElementById('miss').textContent;
-  const time = document.getElementById('timer').textContent;
-
-  const message = 
-    `🎮 タイピングチャレンジ 結果 🎮\n` +
-    `スコア: ${score}\n` +
-    `ミス: ${miss}\n` +
-    `タイム: ${time}\n\n` +
-    `#タイピングチャレンジ`;
-
-  const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
-  window.open(tweetUrl, '_blank');
-});
+ 
    
 
 
@@ -414,6 +399,18 @@ startBtn.addEventListener('click', () => {
   missSound.play();
       }
     });
+
+    window.addEventListener('load', () => {
+  const score = document.getElementById('score').textContent;
+  const miss = document.getElementById('miss').textContent;
+  const time = document.getElementById('timer').textContent;
+
+  const text = `🎮 タイピングチャレンジ 結果 🎮\nスコア: ${score}\nミス: ${miss}\nタイム: ${time}\n#タイピングチャレンジ`;
+
+  const tweetUrl = `https://twitter.com/share?text=${encodeURIComponent(text)}&url=https://yurukei-career.com&via=yurukei20`;
+
+  document.getElementById('tweetLink').setAttribute('href', tweetUrl);
+});
   </script>
 
   <div id="resultScreen" class="hidden">
@@ -421,9 +418,18 @@ startBtn.addEventListener('click', () => {
   <p id="finalScore">スコア: 0</p>
   <p id="finalMiss">ミス: 0</p>
   <button class="btn2" onclick="location.reload()">りとらい！</button>
-  <button id="shareButton" class="x-share-button">
-  🐦 Xでシェアする
-</button>
+  <a id="tweetLink" 
+   href="#" 
+   target="_blank" 
+   rel="nofollow noopener noreferrer"
+   class="x-share-link"
+>
+  🐦 結果をXでシェア！
+</a>
+
+    
+
+    
 
   
 
