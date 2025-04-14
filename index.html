@@ -143,26 +143,38 @@
   color: #0066cc;
 }
 
-document.getElementById('shareButton').addEventListener('click', () => {
-  const result = document.getElementById('resultScreen');
+.x-share-button {
+  background: linear-gradient(135deg, #1da1f2, #0d8ddb);
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.x-share-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
 
-  html2canvas(result).then(canvas => {
-    // 画像データを取得
-    const imageData = canvas.toDataURL('image/png');
+ document.getElementById('shareButton').addEventListener('click', () => {
+  const score = document.getElementById('score').textContent;
+  const miss = document.getElementById('miss').textContent;
+  const time = document.getElementById('timer').textContent;
 
-    // 画像を新しいタブで開く or ダウンロード
-    const link = document.createElement('a');
-    link.href = imageData;
-    link.download = 'typing_result.png';
-    link.click();
+  const message = 
+    `🎮 タイピングチャレンジ 結果 🎮\n` +
+    `スコア: ${score}\n` +
+    `ミス: ${miss}\n` +
+    `タイム: ${time}\n\n` +
+    `#タイピングチャレンジ`;
 
-    // Xの投稿画面を開く（画像は手動で添付してもらう）
-    const text = encodeURIComponent("タイピングゲームの結果をシェア！🎮 #タイピングチャレンジ");
-    const url = `https://twitter.com/intent/tweet?text=${text}`;
-    window.open(url, '_blank');
-  });
+  const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+  window.open(tweetUrl, '_blank');
 });
-
+   
 
 
 
@@ -409,9 +421,11 @@ startBtn.addEventListener('click', () => {
   <p id="finalScore">スコア: 0</p>
   <p id="finalMiss">ミス: 0</p>
   <button class="btn2" onclick="location.reload()">りとらい！</button>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-    <button id="shareButton">Xでシェア</button>
-<canvas id="screenshotCanvas" style="display:none;"></canvas>
+  <button id="shareButton" class="x-share-button">
+  🐦 Xでシェアする
+</button>
+
+  
 
 
 </div>
