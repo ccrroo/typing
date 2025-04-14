@@ -18,18 +18,35 @@
 
     }
 
- #noticeBox {
-    border: 2px solid red;
-    background-color: white;
-    color: black;
-    font-size: 20px;
-    padding: 10px 20px;
-    margin: 20px auto;
-    width: fit-content;
-    border-radius: 10px;
-    font-weight: bold;
-  }
+#noticeBox {
+  position: relative;
+  border: 2px solid red;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  padding: 20px 30px 20px 30px;
+  margin: 60px auto 30px auto; 
+  width: fit-content;
+  border-radius: 10px;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+}
 
+.noticeIcon {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
 
     #titleArea {
   padding-top: 80px; /* ここを調整することで中央寄せに近づける */
@@ -145,8 +162,9 @@
 <body>
 
   <body>
-  <div id="noticeBox">入力方法を更新しました。</div>
-
+  <div id="noticeBox"><span class="noticeIcon">！</span>
+  入力方法を更新しました。
+</div>
   <div id="titleArea">
   <div id="titleContainer">
     <img id="titleImage" src="hakodatelogo.png" alt="タイトル画像">
@@ -320,6 +338,7 @@
    const bgm = document.getElementById('bgm');
 
 startBtn.addEventListener('click', () => {
+  document.getElementById('noticeBox').style.display = 'none';
   bgm.play(); 
    bgm.volume = 0.3;
   startGame();
