@@ -123,6 +123,27 @@
   cursor: pointer;
 }
 
+    #resultScreen {
+  margin-top: 100px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+}
+
+#resultScreen h2 {
+  font-size: 48px;
+  color: #e60033; /* りざると画面のとこ */
+  margin-bottom: 20px;
+}
+
+#resultScreen p {
+  margin: 10px 0;
+  font-size: 36px;
+  color: #0066cc;
+}
+
+
 
 
 
@@ -285,11 +306,20 @@
       timerId = setInterval(() => {
         timer--;
         timerDisplay.textContent = `${timer}秒`;
-        if (timer <= 0) {
-          clearInterval(timerId);
-          alert(`もう終わりだにょん！スコア: ${score}`);
-          location.reload();
-        }
+       if (timer <= 0) {
+  clearInterval(timerId);
+  gameScreen.classList.add('hidden');
+
+  const resultScreen = document.getElementById('resultScreen');
+  const finalScore = document.getElementById('finalScore');
+  const finalMiss = document.getElementById('finalMiss');
+
+  finalScore.textContent = `スコア: ${score}`;
+  finalMiss.textContent = `ミス: ${miss}`;
+
+  resultScreen.classList.remove('hidden');
+}
+
       }, 1000);
     }
 
@@ -348,13 +378,13 @@ startBtn.addEventListener('click', () => {
       }
     });
   </script>
-<script>
-  window.addEventListener('load', () => {
-    if (window.innerWidth <= 768) {
-      alert('このサイトはPC専用だす！');
-    }
-  });
-</script>
+
+  <div id="resultScreen" class="hidden">
+  <h2>⌛ 結果発表 ⌛</h2>
+  <p id="finalScore">スコア: 0</p>
+  <p id="finalMiss">ミス: 0</p>
+  <button class="btn2" onclick="location.reload()">もういちど</button>
+</div>
 
 
 </body>
