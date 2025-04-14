@@ -340,7 +340,7 @@
   finalMiss.textContent = `ミス: ${miss}`;
 
          // ついったーの画面にいかせるやつ！コピペした！！
-const currentLevel = document.getElementById('level-select').value;          
+const currentLevel = document.getElementById('difficulty').value;          
 const tweetText = `🎮 タイピングチャレンジ 結果 🎮\nレベル: ${currentLevel}\nスコア: ${score}\nミス: ${miss}\nタイム: ${60}秒\n#函館高専生のためのタイピング`;
 const tweetUrl = `https://twitter.com/share?text=${encodeURIComponent(tweetText)}&url=https://ccrroo.github.io/typing`;
 document.getElementById('tweetLink').setAttribute('href', tweetUrl);
