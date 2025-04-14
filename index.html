@@ -401,11 +401,11 @@ startBtn.addEventListener('click', () => {
     });
 
     window.addEventListener('load', () => {
-  const score = document.getElementById('finalScore').textContent;
-  const miss = document.getElementById('finalMiss').textContent;
+  const score = document.getElementById('score').textContent;
+  const miss = document.getElementById('miss').textContent;
   const time = document.getElementById('timer').textContent;
 
-  const text = `🎮 タイピングチャレンジ 結果 🎮\nスコア: ${finalScore}\nミス: ${finalMiss}\nタイム: ${time}\n#タイピングチャレンジ`;
+  const text = `🎮 タイピングチャレンジ 結果 🎮\nスコア: ${score}\nミス: ${miss}\nタイム: ${time}\n#タイピングチャレンジ`;
 
   const tweetUrl = `https://twitter.com/share?text=${encodeURIComponent(text)}&url=https://ccrroo.github.io/typing`;
 
