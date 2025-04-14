@@ -187,6 +187,8 @@
   <audio id="missSound" src="gua.mp3" preload="auto"></audio>
   <audio id="startSound" src="start.mp3" preload="auto"></audio>
   <audio id="bgm" src="maju.mp3" autoplay loop preload="auto"></audio>
+  <audio id="finishSound" src="hoih.mp3" preload="auto"></audio>
+
 
 
   <script>
@@ -309,6 +311,10 @@
        if (timer <= 0) {
   clearInterval(timerId);
   gameScreen.classList.add('hidden');
+
+  const finishSound = document.getElementById('finishSound');
+  finishSound.play();
+       
 
   const resultScreen = document.getElementById('resultScreen');
   const finalScore = document.getElementById('finalScore');
