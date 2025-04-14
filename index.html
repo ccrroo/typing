@@ -143,6 +143,25 @@
   color: #0066cc;
 }
 
+document.getElementById('shareButton').addEventListener('click', () => {
+  const result = document.getElementById('resultScreen');
+
+  html2canvas(result).then(canvas => {
+    // 画像データを取得
+    const imageData = canvas.toDataURL('image/png');
+
+    // 画像を新しいタブで開く or ダウンロード
+    const link = document.createElement('a');
+    link.href = imageData;
+    link.download = 'typing_result.png';
+    link.click();
+
+    // Xの投稿画面を開く（画像は手動で添付してもらう）
+    const text = encodeURIComponent("タイピングゲームの結果をシェア！🎮 #タイピングチャレンジ");
+    const url = `https://twitter.com/intent/tweet?text=${text}`;
+    window.open(url, '_blank');
+  });
+});
 
 
 
@@ -390,6 +409,11 @@ startBtn.addEventListener('click', () => {
   <p id="finalScore">スコア: 0</p>
   <p id="finalMiss">ミス: 0</p>
   <button class="btn2" onclick="location.reload()">りとらい！</button>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <button id="shareButton">Xでシェア</button>
+<canvas id="screenshotCanvas" style="display:none;"></canvas>
+
+
 </div>
 
 
