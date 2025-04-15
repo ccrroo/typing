@@ -1,438 +1,94 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>函館高専生のためのタイピング</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>メンテナンス中</title>
   <style>
     body {
-      background-color: #ffffff;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 40px;
       margin: 0;
-      background-image: url('pophaikei.png'); 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-       background-attachment: fixed;
-
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      color: #ffffff;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
-
-    #titleArea {
-  padding-top: 100px; /* これねぇ、、、真ん中にするやつだよ！ */
-}
-    h1 {
-      font-size: 64px;
-      line-height: 1.2;
-      color: #333;
-      margin-bottom: 20px;
+    .glow-text {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #00ffc3;
+      text-shadow: 0 0 5px #00ffc3, 0 0 20px #00ffc3, 0 0 40px #00ffc3;
+      animation: glowPulse 2s infinite ease-in-out;
     }
 
-    .btn {
-      background-color: #000000;
-      color: white;
-      padding: 15px 30px;
-      font-size: 24px;
-      margin: 10px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      animation: zoom 1.8s infinite alternate;
-    }
-     .btn2 {
-      background-color: #ff4500;
-      color: white;
-      padding: 15px 30px;
-      font-size: 24px;
-      margin: 10px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      animation: zoom 1.8s infinite alternate;
-    }
-    #titleContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-
-#titleImage {
-  width: 180px;
-  height: 180px;
-  animation: spin 8s linear infinite;
-  border-radius: 12px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-
-    @keyframes zoom {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
+    @keyframes glowPulse {
+      0%, 100% {
+        text-shadow: 0 0 5px #00ffc3, 0 0 20px #00ffc3, 0 0 40px #00ffc3;
+      }
+      50% {
+        text-shadow: 0 0 10px #00e6b8, 0 0 30px #00e6b8, 0 0 60px #00e6b8;
+      }
     }
 
-    .hidden { display: none; }
-
-    #japaneseText {
-      font-size: 32px;
-      margin-top: 20px;
+    .gear {
+      width: 80px;
+      height: 80px;
+      margin: 20px 0;
+      animation: spin 4s linear infinite;
+      filter: drop-shadow(0 0 10px #00ffc3);
     }
 
-    #typingArea {
-      
-      font-size: 48px;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .message {
+      font-size: 1.2rem;
       margin-top: 10px;
+      color: #ccc;
+      animation: fadeIn 2s ease-in-out;
     }
 
-    
-
-    .correct {
-      color: blue;
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
-    #score, #miss, #timer {
-      margin-top: 15px;
-      font-size: 18px;
+    .clouds {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 300%;
+      height: 100%;
+      background: url('https://i.imgur.com/lJ9VfAv.png') repeat-x;
+      animation: cloudMove 60s linear infinite;
+      opacity: 0.05;
     }
 
-    #message {
-  font-size: 36px;          
-  font-weight: bold;       
-  margin-top: 240px;
-  text-align: center;       
-  color: #333;             
-}
-
-    select {
-  font-size: 18px;
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: 2px solid #4CAF50;
-  background-color: #f8fff8;
-  color: #333;
-  margin: 10px 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  appearance: none;
-  cursor: pointer;
-}
-
-    #resultScreen {
-  margin-top: 100px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #222;
-  text-align: center;
-}
-
-#resultScreen h2 {
-  font-size: 48px;
-  color: #e60033; /* りざると画面のとこ */
-  margin-bottom: 20px;
-}
-
-#resultScreen p {
-  margin: 10px 0;
-  font-size: 36px;
-  color: #0066cc;
-}
-
-.x-share-link {
-  display: inline-block;
-  background: #1da1f2;
-  color: white;
-  padding: 12px 20px;
-  font-size: 1.1rem;
-  border-radius: 30px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background 0.3s, transform 0.2s;
-}
-.x-share-link:hover {
-  background: #0d8ddb;
-  transform: scale(1.05);
-}
- 
-   
-
-
-
-
-
+    @keyframes cloudMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-66.6%); }
+    }
   </style>
 </head>
 <body>
- <div id="titleArea">
-  <div id="titleContainer">
-    <img id="titleImage" src="hakodatelogo.png" alt="タイトル画像">
-    <div>
-      <h1>函館高専生のための<br>タイピング</h1>
-     
-      <button class="btn2" id="startBtn">はじめる</button>
-      <button class="btn" id="aboutBtn">おれのX</button>
-      <br>
-      <div>👇レベルを変更</div>
-       <select id="difficulty">
-        <option value="easy">いーじー</option>
-        <option value="normal" selected>のーまる</option>
-        <option value="hard">はーど</option>
-      </select><br>
-    </div>
-  </div>
-</div>
+  <div class="clouds"></div>
 
-<div id="message" class="hidden">スペースで開始</div>
+  <div class="glow-text">⚙ メンテナンス中です</div>
   
+  <svg class="gear" viewBox="0 0 100 100">
+    <path fill="#00ffc3" d="M94.3,56.7v-13l-12-2.6c-0.7-2.6-1.6-5.1-2.8-7.5l7.9-9.4l-9.2-9.2l-9.4,7.9c-2.4-1.2-4.9-2.1-7.5-2.8
+      L56.7,5.7h-13l-2.6,12c-2.6,0.7-5.1,1.6-7.5,2.8l-9.4-7.9l-9.2,9.2l7.9,9.4c-1.2,2.4-2.1,4.9-2.8,7.5L5.7,43.3v13l12,2.6
+      c0.7,2.6,1.6,5.1,2.8,7.5l-7.9,9.4l9.2,9.2l9.4-7.9c2.4,1.2,4.9,2.1,7.5,2.8l2.6,12h13l2.6-12c2.6-0.7,5.1-1.6,7.5-2.8l9.4,7.9
+      l9.2-9.2l-7.9-9.4c1.2-2.4,2.1-4.9,2.8-7.5L94.3,56.7z M50,65c-8.3,0-15-6.7-15-15s6.7-15,15-15s15,6.7,15,15S58.3,65,50,65z"/>
+  </svg>
 
-<div id="gameScreen" class="hidden">
-  <div id="japaneseText"></div>
-  <div id="typingArea"></div>
-  <div id="timer">60秒</div>
-  <div id="score">スコア: 0</div>
-  <div id="miss">ミス: 0</div>
-</div>
-
-  
-  <audio id="typeSound" src="caco.mp3" preload="auto"></audio>
-  <audio id="missSound" src="gua.mp3" preload="auto"></audio>
-  <audio id="startSound" src="start.mp3" preload="auto"></audio>
-  <audio id="bgm" src="shoshosho.wav" autoplay loop preload="auto"></audio>
-  <audio id="finishSound" src="hoih.mp3" preload="auto"></audio>
-
-
-
-  <script>
-    const sentenceBank = {
-      easy: ["はこだて", "こうせん", "とくらちょう", "しゅんちょうりょう","はこだてこうせん","たいいくかん", "りゅうねん", "あかてん", "ついにんしけん", "ほこう", "ほしゅう", "しらばす", "こくさいとう", "すぽーつかがく", "じさつ", "ほれたこころ", "ゆのかわえき", "きむわいぷ", "はらすめんと", "りきがく", "おいこん", "ろぼけん", "こうせんびょう", "こうがくりてらしー", "こうがくくそじっけん", "きかいせいず", "せいきょういく", "こころのやまい", "えな", "うつ", "えなどり", "しまえなが", "よるがた"],
-      normal: ["せいさんしすてむこうがくか", "ぶっしつかんきょうこうがくか", "しゃかいきばんこうがくか", "しゅんちょうりょうはごみ", "ろぼっとこうがく", "にゅうもんしーげんご", "こうせんせいのこみゅにけーしょんにゅうもん", "がくせいせいかつのてびき", "びぶんせきぶん", "しんきそすうがくかいていばん", "しんせんけいだいすうかいていばん", "ほっかいどうきょういくだいがく", "さかなをつってたべるかい", "きみはごじゅってんげんてんだ", "れべるのたかいじょうだん", "せかいへはばたくはこだてこうせん", "ながゆめをもて", "たいしをいだけ", "ちからつよかれ", "せんきゅうひゃくろくじゅうにねん", "せいたいじょうほうじっけんしつ", "あーちぇりーじょう", "ともえりょう", "だいいちこうぎしつ", "こうせんざか", "さつどらはこだてとくらてん", "いっせいがくしゅう", "きょうつうがくしゅうじかん"],
-      hard: ["どくりつぎょうせいほうじんこくりつこうとうせんもんがっこうきこうこくりつはこだてこうぎょうこうとうせんもんがっこう", "さしのぼるあさひにはえてそそりたつこのまなびやにさちおおきゆめをいだきてつどいきしわがはらからよ"]
-    };
-
-    const kanaMap = {
-      "きゃ":"kya", "きゅ":"kyu", "きょ":"kyo", "しゃ":"sya", "しゅ":"syu", "しょ":"syo",
-      "ちゃ":"tya", "ちゅ":"tyu", "ちょ":"tyo",  "ちぇ":"tye","にゃ":"nya", "にゅ":"nyu", "にょ":"nyo",
-      "ひゃ":"hya", "ひゅ":"hyu", "ひょ":"hyo","びゃ":"bya", "びゅ":"byu", "びょ":"byo","みゃ":"mya", "みゅ":"myu", "みょ":"myo",
-      "りゃ":"rya", "りゅ":"ryu", "りょ":"ryo", "ぎゃ":"gya", "ぎゅ":"gyu", "ぎょ":"gyo",
-      "じゃ":"ja", "じゅ":"ju", "じょ":"jo",
-      "あ":"a", "い":"i", "う":"u", "え":"e", "お":"o",
-      "か":"ka", "き":"ki", "く":"ku", "け":"ke", "こ":"ko",
-      "さ":"sa", "し":"si", "す":"su", "せ":"se", "そ":"so",
-      "た":"ta", "ち":"ti", "つ":"tu", "て":"te", "と":"to",
-      "な":"na", "に":"ni", "ぬ":"nu", "ね":"ne", "の":"no",
-      "は":"ha", "ひ":"hi", "ふ":"fu", "へ":"he", "ほ":"ho",
-      "ま":"ma", "み":"mi", "む":"mu", "め":"me", "も":"mo",
-      "や":"ya", "ゆ":"yu", "よ":"yo",
-      "ら":"ra", "り":"ri", "る":"ru", "れ":"re", "ろ":"ro",
-      "わ":"wa", "を":"wo", "ん":"nn",
-      "が":"ga", "ぎ":"gi", "ぐ":"gu", "げ":"ge", "ご":"go",
-      "ざ":"za", "じ":"ji", "ず":"zu", "ぜ":"ze", "ぞ":"zo",
-      "だ":"da", "ぢ":"ji", "づ":"zu", "で":"de", "ど":"do",
-      "ば":"ba", "び":"bi", "ぶ":"bu", "べ":"be", "ぼ":"bo",
-      "ぱ":"pa", "ぴ":"pi", "ぷ":"pu", "ぺ":"pe", "ぽ":"po", "ー":"-"
-    };
-
-    let romaji = '';
-    let input = '';
-    let sentence = '';
-    let score = 0;
-    let miss = 0;
-    let started = false;
-    let timer = 60;
-    let timerId = null;
-
-    const startBtn = document.getElementById('startBtn');
-    const titleArea = document.getElementById('titleArea');
-    const message = document.getElementById('message');
-    const gameScreen = document.getElementById('gameScreen');
-    const japaneseText = document.getElementById('japaneseText');
-    const typingArea = document.getElementById('typingArea');
-    const scoreDisplay = document.getElementById('score');
-    const missDisplay = document.getElementById('miss');
-    const timerDisplay = document.getElementById('timer');
-    const typeSound = document.getElementById('typeSound');
-    const missSound = document.getElementById('missSound');
-
-    function kanaToRomaji(text) {
-      let result = '';
-      for (let i = 0; i < text.length; i++) {
-        if (text[i] === 'っ' && i + 1 < text.length) {
-          const next = text.slice(i + 1, i + 3);
-          const nextRomaji = kanaMap[next] || kanaMap[text[i + 1]];
-          result += nextRomaji[0] + nextRomaji;
-          i++;
-          
-        } else if (kanaMap[text.slice(i, i + 2)]) {
-          result += kanaMap[text.slice(i, i + 2)];
-          i++;
-        } else {
-          result += kanaMap[text[i]] || text[i];
-        }
-      }
-      return result;
-    }
-
-    function loadNewSentence() {
-      const level = document.getElementById('difficulty').value;
-      const list = sentenceBank[level];
-      sentence = list[Math.floor(Math.random() * list.length)];
-      romaji = kanaToRomaji(sentence);
-      input = '';
-      japaneseText.textContent = sentence;
-      updateTypingArea();
-    }
-
-    function updateTypingArea() {
-      typingArea.innerHTML = `<span class="correct">${input}</span>${romaji.slice(input.length)}`;
-    }
-
-    function playSound() {
-      typeSound.currentTime = 0;
-      typeSound.play();
-    }
-
-    function playStartSound() {
-  const sound = document.getElementById('startSound');
-  sound.currentTime = 0;
-  sound.play();
-}
-
-
-
-    function startGame() {
-      score = 0;
-      miss = 0;
-      timer = 60;
-      started = true;
-      updateScore();
-      updateMiss();
-
-      titleArea.classList.add('hidden');
-      message.classList.remove('hidden');
-    }
-
-    function beginTyping() {
-      message.classList.add('hidden');
-      gameScreen.classList.remove('hidden');
-      loadNewSentence();
-
-      timerId = setInterval(() => {
-        timer--;
-        timerDisplay.textContent = `${timer}秒`;
-       if (timer <= 0) {
-  clearInterval(timerId);
-  gameScreen.classList.add('hidden');
-
-  const finishSound = document.getElementById('finishSound');
-  finishSound.play();
-       
-
-  const resultScreen = document.getElementById('resultScreen');
-  const finalScore = document.getElementById('finalScore');
-  const finalMiss = document.getElementById('finalMiss');
-
-  finalScore.textContent = `スコア: ${score}`;
-  finalMiss.textContent = `ミス: ${miss}`;
-
-         // ついったーの画面にいかせるやつ！コピペした！！
-const currentLevel = document.getElementById('difficulty').value;          
-const tweetText = `🎮 タイピングチャレンジ 結果 🎮\nレベル: ${currentLevel}\nスコア: ${score}\nミス: ${miss}\nタイム: ${60}秒\n#函館高専生のためのタイピング`;
-const tweetUrl = `https://twitter.com/share?text=${encodeURIComponent(tweetText)}&url=https://ccrroo.github.io/typing`;
-document.getElementById('tweetLink').setAttribute('href', tweetUrl);
-
-
-  resultScreen.classList.remove('hidden');
-}
-
-      }, 1000);
-    }
-
-    function updateScore() {
-      scoreDisplay.textContent = `スコア: ${score}`;
-    }
-
-    function updateMiss() {
-      missDisplay.textContent = `ミス: ${miss}`;
-    }
-
-   const bgm = document.getElementById('bgm');
-
-startBtn.addEventListener('click', () => {
-  bgm.play(); 
-   bgm.volume = 0.3;
-  startGame();
-});
-
-   
-    
-    document.getElementById('aboutBtn').addEventListener('click', () => {
-  window.open('https://x.com/sta0z', '_blank');
-});
-
-
-    document.addEventListener('keydown', (e) => {
-      if (!started) return;
-
-      if (message.classList.contains('hidden') === false && e.code === 'Space') {
-        e.preventDefault();
-        playStartSound();
-        beginTyping();
-        return;
-      }
-
-     if (!/^[a-zー\-]$/i.test(e.key)) return;
-
-      const key = e.key.toLowerCase();
-      const expectedChar = romaji[input.length];
-
-      if (key === expectedChar) {
-        input += key;
-        playSound();
-        updateTypingArea();
-        if (input === romaji) {
-          score++;
-          updateScore();
-          loadNewSentence();
-        }
-      } else {
-        miss++;
-        updateMiss();
-        missSound.currentTime = 0;
-  missSound.play();
-      }
-    });
-
-
-  </script>
-
-  <div id="resultScreen" class="hidden">
-  <h2>⌛ 結果発表 ⌛</h2>
-  <p id="finalScore">スコア: 0</p>
-  <p id="finalMiss">ミス: 0</p>
-  <button class="btn2" onclick="location.reload()">りとらい！</button>
-  <a id="tweetLink" 
-   href="#" 
-   target="_blank" 
-   rel="nofollow noopener noreferrer"
-   class="x-share-link"
->
-   結果をXでシェア
-</a>
-
-    
-
-    
-
-  
-
-
-</div>
-
-
+  <div class="message">ただいまシステムをアップグレード中です。しばらくお待ちください。</div>
 </body>
 </html>
