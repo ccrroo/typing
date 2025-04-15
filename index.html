@@ -219,7 +219,7 @@
 
 let gameDuration = 60; 
 
-document.getElementById('start-button').addEventListener('click', () => {
+document.getElementById('startBtn').addEventListener('click', () => {
   const selectedTime = parseInt(timeSelect.value, 10);
   gameDuration = selectedTime;
 
@@ -327,7 +327,7 @@ document.getElementById('start-button').addEventListener('click', () => {
     function startGame() {
       score = 0;
       miss = 0;
-      timer = 60;
+      timer = gameDuration;
       started = true;
       updateScore();
       updateMiss();
@@ -391,19 +391,6 @@ startBtn.addEventListener('click', () => {
   
   startGame();
 });
-
-    function startGame() {
-  score = 0;
-  miss = 0;
-  timer = gameDuration; // おっと！何かくか忘れちぇったよお
-  started = true;
-  updateScore();
-  updateMiss();
-
-  titleArea.classList.add('hidden');
-  message.classList.remove('hidden');
-}
-
    
     
     document.getElementById('aboutBtn').addEventListener('click', () => {
