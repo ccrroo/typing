@@ -184,7 +184,6 @@
         <option value="hard">はーど</option>
       </select>
       <br>
-       <label for="time">じかん:</label>
   <select id="time-select" class="select-box">
     <option value="30">30秒</option>
     <option value="60" selected>1分</option>
@@ -362,7 +361,7 @@ document.getElementById('start-button').addEventListener('click', () => {
 
          // ついったーの画面にいかせるやつ！コピペした！！
 const currentLevel = document.getElementById('difficulty').value;          
-const tweetText = `🎮 タイピングチャレンジ 結果 🎮\nレベル: ${currentLevel}\nスコア: ${score}\nミス: ${miss}\nタイム: ${60}秒\n#函館高専生のためのタイピング`;
+const tweetText = `🎮 タイピングチャレンジ 結果 🎮\nレベル: ${currentLevel}\nスコア: ${score}\nミス: ${miss}\nタイム: ${gameDuration}秒\n#函館高専生のためのタイピング`;
 const tweetUrl = `https://twitter.com/share?text=${encodeURIComponent(tweetText)}&url=https://ccrroo.github.io/typing`;
 document.getElementById('tweetLink').setAttribute('href', tweetUrl);
 
@@ -386,8 +385,24 @@ document.getElementById('tweetLink').setAttribute('href', tweetUrl);
 startBtn.addEventListener('click', () => {
   bgm.play(); 
    bgm.volume = 0.3;
+
+   const selectedTime = parseInt(timeSelect.value, 10);
+  gameDuration = selectedTime;  
+  
   startGame();
 });
+
+    function startGame() {
+  score = 0;
+  miss = 0;
+  timer = gameDuration; // おっと！何かくか忘れちぇったよお
+  started = true;
+  updateScore();
+  updateMiss();
+
+  titleArea.classList.add('hidden');
+  message.classList.remove('hidden');
+}
 
    
     
